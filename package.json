@@ -1,0 +1,29 @@
+{
+  "name": "dbjs-ext",
+  "version": "0.0.0",
+  "author": "Mariusz Nowak <mariusz@medikoo.com> (http://www.medikoo.com/)",
+  "description": "Extension types for dbjs database engine",
+  "scripts": {
+    "test": "node node_modules/tad/bin/tad"
+  },
+  "keywords": [
+    "db",
+    "dbjs",
+    "database",
+    "types",
+    "extensions",
+    "nosql"
+  ],
+  "dependencies": {
+    "dbjs": "medikoo/dbjs"
+  },
+  "devDependencies": {
+    "es5-ext": "~0.9.1",
+    "tad": "~0.1.13"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/medikoo/dbjs-ext.git"
+  },
+  "license": "MIT"
+}
