@@ -15,7 +15,7 @@
     "nosql"
   ],
   "dependencies": {
-    "dbjs": "medikoo/dbjs"
+    "dbjs": "git://github.com/medikoo/dbjs"
   },
   "devDependencies": {
     "es5-ext": "~0.9.1",
