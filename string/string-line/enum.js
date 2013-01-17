@@ -3,6 +3,7 @@
 var StringLine = require('../string-line');
 
 module.exports = StringLine.create('Enum', function (options) {
+	if (options == null) return;
 	if (Array.isArray(options)) {
 		this._options.$setValue(options);
 		return;
@@ -14,37 +15,42 @@ module.exports = StringLine.create('Enum', function (options) {
 		option.$setProperties(value);
 	}, this._options);
 }, {
+	setOptions: function (options) {
+		var error;
+		if (options == null) throw new TypeError('Options cannot be null');
+		error = this.validateConstruction(options);
+		if (error) throw error;
+		this.$construct(options);
+	},
 	validateConstruction: function (options) {
 		var opts, error, errors;
+		if (options == null) return null;
 		if (Array.isArray(options)) {
 			return this.StringLine.validateConstruction.call(this,
 				{ options: options });
 		}
-		if (options) {
-			opts = [];
-			Object.keys(Object(options)).forEach(function (name) {
-				var error, value = options[name];
-				opts.push(name);
-				if (value === true) return;
-				if (value == null) {
-					error = new TypeError(value + " are not valid option properties");
-				} else {
-					error = this.prototype.validateCreate(value);
-				}
-				if (error) {
-					if (!errors) errors = [];
-					errors.push(error);
-				}
-			}, this.Object);
-			error = this.StringLine.validateConstruction.call(this,
-				{ options: opts });
-			if (errors) {
-				error = this.combineErrors.apply(this, errors.concat(error));
-				if (error) error.message = options + " is not valid options";
+		opts = [];
+		Object.keys(Object(options)).forEach(function (name) {
+			var error, value = options[name];
+			opts.push(name);
+			if (value === true) return;
+			if (value == null) {
+				error = new TypeError(value + " are not valid option properties");
+			} else {
+				error = this.prototype.validateCreate(value);
 			}
-			return error;
+			if (error) {
+				if (!errors) errors = [];
+				errors.push(error);
+			}
+		}, this.Object);
+		error = this.StringLine.validateConstruction.call(this,
+			{ options: opts });
+		if (errors) {
+			error = this.combineErrors.apply(this, errors.concat(error));
+			if (error) error.message = options + " is not valid options";
 		}
-		return new TypeError(options + " is not valid options");
+		return error;
 	},
 	options: StringLine.rel({ multiple: true, required: true }),
 	is: function (value) {
