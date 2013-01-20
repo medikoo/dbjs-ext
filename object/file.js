@@ -1,7 +1,8 @@
 'use strict';
 
 var Filename = require('../string/string-line/filename')
-  , Url      = require('../string/string-line/url');
+  , Url      = require('../string/string-line/url')
+  , UInteger = require('../number/integer/u-integer');
 
 module.exports = require('dbjs').create('File', function (data) {
 	if (typeof data === 'string') {
@@ -12,6 +13,8 @@ module.exports = require('dbjs').create('File', function (data) {
 }, {
 	dir: Filename.required,
 	url: Url,
+	name: Filename,
+	size: UInteger,
 	validateConstruction: function (data) {
 		if (typeof data === 'string') {
 			return this.validateCreateProperty('dir', data);
