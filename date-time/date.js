@@ -21,5 +21,12 @@ module.exports = require('dbjs').DateTime.create('Date', {
 	$construct: function (ignore) {
 		this.setTime(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(),
 			12));
+	},
+	toString: function () {
+		var proto = this.__proto__, value;
+		this.__proto__ = Date.prototype;
+		value = this.toLocaleDateString();
+		this.__proto__ = proto;
+		return value;
 	}
 });
