@@ -1,6 +1,7 @@
 'use strict';
 
-var StringLine = require('../string-line');
+var combineErrors = require('dbjs/lib/utils/combine-errors')
+  , StringLine    = require('../string-line');
 
 module.exports = StringLine.create('Enum', function (options) {
 	if (options == null) return;
@@ -47,7 +48,7 @@ module.exports = StringLine.create('Enum', function (options) {
 		error = this.StringLine.validateConstruction.call(this,
 			{ options: opts });
 		if (errors) {
-			error = this.combineErrors.apply(this, errors.concat(error));
+			error = combineErrors.apply(this, errors.concat(error));
 			if (error) error.message = options + " is not valid options";
 		}
 		return error;
