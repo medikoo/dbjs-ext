@@ -38,13 +38,13 @@ module.exports = StringLine.create('Enum', function (options) {
 			if (value == null) {
 				error = new TypeError(value + " are not valid option properties");
 			} else {
-				error = this.prototype.validateCreate(value);
+				error = this._itemPrototype_.validateProperties(value);
 			}
 			if (error) {
 				if (!errors) errors = [];
 				errors.push(error);
 			}
-		}, this.Object);
+		}, this.options);
 		error = this.StringLine.validateConstruction.call(this,
 			{ options: opts });
 		if (errors) {
