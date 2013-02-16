@@ -22,6 +22,12 @@ module.exports = require('dbjs').DateTime.create('Date', {
 		this.setTime(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(),
 			12));
 	},
+	ISOString: function () {
+		var month = String(this.getMonth() + 1), date = String(this.getDate());
+		if (month.length === 1) month = '0' + month;
+		if (date.length === 1) date = '0' + date;
+		return this.getFullYear() + '-' + month + '-' + date;
+	},
 	toString: function () {
 		var proto = this.__proto__, value;
 		this.__proto__ = Date.prototype;
