@@ -7,6 +7,13 @@ module.exports = Db.Number.create('Currency', {
 	symbol: Db.String.required
 }, {
 	toString: function () {
-		return this.ns.symbol + this.toFixed(2);
+		var num = 0, step = this.__step.__value;
+		if (step != null) {
+			while (step < 1) {
+				++num;
+				step *= 10;
+			}
+		}
+		return this.ns.symbol + this.toFixed(num);
 	}
 });
