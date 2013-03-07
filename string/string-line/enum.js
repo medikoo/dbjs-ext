@@ -54,6 +54,13 @@ module.exports = StringLine.create('Enum', function (options) {
 		return error;
 	},
 	options: StringLine.rel({ multiple: true, required: true }),
+	labels: function () {
+		var data = {};
+		this._options.itemsListByOrder().forEach(function (item) {
+			data[item._subject_] = item.label;
+		});
+		return data;
+	},
 	is: function (value) {
 		if (typeof value !== 'string') return false;
 		return this.options.has(value);
