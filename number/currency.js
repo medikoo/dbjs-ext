@@ -7,7 +7,7 @@ module.exports = Db.Number.create('Currency', {
 	symbol: Db.String.required
 }, {
 	toString: function () {
-		var num = 0, step = this.__step.__value;
+		var num = 0, step = this.ns.__step.__value;
 		if (step != null) {
 			while (step < 1) {
 				++num;
