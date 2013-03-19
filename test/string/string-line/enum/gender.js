@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = function (t, a) {
-	a.deep(t.options.values, ['F', 'M']);
+	a.deep(t.options.values.sort(), ['F', 'M']);
 };
