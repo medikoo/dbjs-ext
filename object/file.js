@@ -1,6 +1,7 @@
 'use strict';
 
 var Filename = require('../string/string-line/filename')
+  , MimeType = require('../string/string-line/mime-type')
   , Url      = require('../string/string-line/url')
   , UInteger = require('../number/integer/u-integer');
 
@@ -15,6 +16,8 @@ module.exports = require('dbjs').create('File', function (data) {
 	url: Url,
 	name: Filename,
 	size: UInteger,
+	type: MimeType.rel({ required: true,
+		value: function () { return this.ns.type; } }),
 	validateConstruction: function (data) {
 		if (typeof data === 'string') {
 			return this.validateCreateProperty('dir', data);
@@ -23,5 +26,6 @@ module.exports = require('dbjs').create('File', function (data) {
 	}
 }, {
 	dir: Filename.rel('/'),
-	url: Url.rel({ value: '/' })
+	url: Url.rel({ value: '/' }),
+	type: MimeType.rel({ required: true, value: 'application/octet-stream' })
 });
