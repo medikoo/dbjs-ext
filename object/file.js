@@ -1,11 +1,14 @@
 'use strict';
 
-var Filename = require('../string/string-line/filename')
+var Db       = require('dbjs')
+  , Filename = require('../string/string-line/filename')
   , MimeType = require('../string/string-line/mime-type')
   , Url      = require('../string/string-line/url')
-  , UInteger = require('../number/integer/u-integer');
+  , UInteger = require('../number/integer/u-integer')
 
-module.exports = require('dbjs').create('File', function (data) {
+  , File;
+
+File = module.exports = require('dbjs').create('File', function (data) {
 	if (typeof data === 'string') {
 		this.dir = data;
 		return;
@@ -27,5 +30,13 @@ module.exports = require('dbjs').create('File', function (data) {
 }, {
 	dir: Filename.rel('/'),
 	url: Url.rel({ value: '/' }),
-	type: MimeType.rel({ required: true, value: 'application/octet-stream' })
+	type: MimeType.rel({ required: true, value: 'application/octet-stream' }),
+	types: MimeType.rel({ multiple: true }),
+	createByType: function (type) {
+		var args = Array.prototype.slice.call(arguments, 1);
+		if (!this.types.has(type)) return this.apply(null, args);
+		return this.types.getItem(type).Namespace.apply(null, args);
+	}
 });
+
+File.types._itemPrototype_.set('Namespace', Db.Base);
