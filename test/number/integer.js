@@ -14,7 +14,7 @@ module.exports = function (t, a) {
 	a(t(123.63), 123, "Float #2");
 	a(t(-123.23), -123, "Float: Negative");
 	a(t(-123.64), -123, "Float: Negative #2");
-	a(t(new Number(123)), 123, "Number object");
+	a(t(new Number(123)), 123, "Number object"); //jslint: skip
 	return {
 		"Is": function (a) {
 			a(t.is(undefined), false, "Undefined");
@@ -24,7 +24,7 @@ module.exports = function (t, a) {
 			a(t.is('false'), false, "Unconrvertable string");
 			a(t.is('0'), false, "Convertable string");
 			a(t.is(123), true, "Integer");
-			a(t.is(new Number(123)), false, "Number object");
+			a(t.is(new Number(123)), false, "Number object"); //jslint: skip
 			a(t.is(123.23), false, "Float");
 			a(t.is(-123.23), false, "Float: Negative");
 		},
@@ -36,7 +36,7 @@ module.exports = function (t, a) {
 			a(t.normalize('false'), null, "Unconrvertable string");
 			a(t.normalize('0'), 0, "Convertable string");
 			a(t.normalize(123), 123, "Number");
-			a(t.normalize(new Number(123)), 123, "Number object");
+			a(t.normalize(new Number(123)), 123, "Number object"); //jslint: skip
 			a(t.normalize(123.23), 123, "Float");
 			a(t.normalize(123.53), 123, "Float #2");
 			a(t.normalize(-123.23), -123, "Float: Negative");
@@ -51,7 +51,8 @@ module.exports = function (t, a) {
 				"Unconrvertable string");
 			a(t.prototype.validateCreate('0'), null, "Convertable string");
 			a(t.prototype.validateCreate(123), null, "Number");
-			a(t.prototype.validateCreate(new Number(123)), null, "Number object");
+			a(t.prototype.validateCreate(new Number(123)), null, //jslint: skip
+				"Number object");
 			a(t.prototype.validateCreate(123.23), null, "Float");
 			a(t.prototype.validateCreate(-123.23), null, "Float: Negative");
 		}
