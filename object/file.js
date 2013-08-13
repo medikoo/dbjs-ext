@@ -31,6 +31,9 @@ File = module.exports = require('dbjs').create('File', function (data) {
 	dir: Filename.rel('/'),
 	url: Url.rel({ value: '/' }),
 	type: MimeType.rel({ required: true, value: 'application/octet-stream' }),
+	accept: MimeType.rel({ required: true, value: function () {
+		return this.types;
+	}, multiple: true }),
 	types: MimeType.rel({ multiple: true }),
 	createByType: function (type) {
 		var args = Array.prototype.slice.call(arguments, 1);
