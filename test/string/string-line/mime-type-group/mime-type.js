@@ -9,6 +9,7 @@ module.exports = function (t, a) {
 		'application/vnd.adobe.air-application-installer-package+zip',
 		"Valid #2");
 	a(t('image/bmp'), 'image/bmp', "Valid #3");
+	a(isError(t.prototype.validateCreate('image/*')), true, "Group");
 	a(isError(t.prototype.validateCreate('')), true, "Empty");
 	a(isError(t.prototype.validateCreate('wrongtext')), true, "Wrong #1");
 	a(isError(t.prototype.validateCreate('raz/ sd sfd ')), true, "Wrong #2");
