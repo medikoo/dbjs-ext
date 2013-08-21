@@ -10,7 +10,7 @@ var Db            = require('dbjs')
   , File;
 
 File = module.exports = require('dbjs').create('File', {
-	dir: Filename.required,
+	path: Filename.required,
 	url: Url,
 	name: Filename,
 	size: UInteger,
