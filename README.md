@@ -17,7 +17,7 @@ You can easily bundle NPM packages for browser with [modules-webmake](https://gi
 _List of extensions is not closed and is still being completed._
 
 * DateTime
-    * **Date** - Date, where not time is applicable. Date is saved against UTC time-zone, and it's guaranteed to produce same dates in any time-zone application is run
+    * **Date** - Date, where time is not applicable. Date is saved against UTC time-zone, and it's guaranteed to produce same dates in any time-zone application is run
 * Number
     * **Currency** - Abstract currency type, should be used only to create specific currency types
         * **ArgentinePeso** - Argentine Peso
