@@ -29,9 +29,9 @@ module.exports = require('dbjs').DateTime.create('Date', {
 		return this.getFullYear() + '-' + month + '-' + date;
 	},
 	toString: function () {
-		var proto = this.__proto__, value;
+		var proto = this.__proto__, value, locale = this.Db.locale;
 		this.__proto__ = Date.prototype;
-		value = this.toLocaleDateString();
+		value = this.toLocaleDateString(locale);
 		this.__proto__ = proto;
 		return value;
 	}
