@@ -1,47 +1,38 @@
 'use strict';
 
-var Db            = require('dbjs')
-  , Filename      = require('../string/string-line/filename')
-  , MimeTypeGroup = require('../string/string-line/mime-type-group')
-  , MimeType      = require('../string/string-line/mime-type-group/mime-type')
-  , Url           = require('../string/string-line/url')
-  , UInteger      = require('../number/integer/u-integer')
+var memoize         = require('memoizee/lib/regular')
+  , defineFilename  = require('../string/string-line/filename')
+  , defineMimeGroup = require('../string/string-line/mime-type-group')
+  , defineMimeType  = require('../string/string-line/mime-type-group/mime-type')
+  , defineUrl       = require('../string/string-line/url')
+  , defineUInteger  = require('../number/integer/u-integer');
 
-  , File;
+module.exports = memoize(function (db) {
+	defineFilename(db);
+	defineMimeGroup(db);
+	defineMimeType(db);
+	defineUrl(db);
+	defineUInteger(db);
 
-File = module.exports = require('dbjs').create('File', {
-	path: Filename.required,
-	url: Url,
-	name: Filename,
-	size: UInteger,
-	type: MimeType.rel({ required: true,
-		value: function () { return this.ns.type; },
-		validateRelation: function (value) {
-			var accept = this.obj.ns.accept;
-			if (!accept || !accept.count) return null;
-			value = String(value);
-			if (accept.values.some(function (mime) {
-					if (mime.slice(-2) === '/*') {
-						if (value.indexOf(mime.slice(0, -2)) === 0) return true;
-					} else {
-						if (value === mime) return true;
-					}
-				})) {
-				return null;
-			}
-			return new TypeError("Unsupported mime type");
-		} })
-}, {
-	dir: Filename.rel('/'),
-	url: Url.rel({ value: '/' }),
-	type: MimeType.rel({ required: true, value: 'application/octet-stream' }),
-	accept: MimeTypeGroup.rel({ value: null, multiple: true }),
-	types: MimeType.rel({ multiple: true }),
-	createByType: function (type) {
-		var args = Array.prototype.slice.call(arguments, 1);
-		if (!this.types.has(type)) return this.apply(null, args);
-		return this.types.getItem(type).Namespace.apply(null, args);
-	}
+	return db.Object.extend('File', {
+		path: { type: db.Filename, required: true },
+		url: { type: db.Url },
+		name: { type: db.Filename },
+		size: { type: db.UInteger },
+		type: { type: db.MimeType, required: true,
+			value: function () { return this.constructor.type; } }
+	}, {
+		dir: { type: db.Filename, value: '/' },
+		url: { type: db.Url, value: '/' },
+		type: { type: db.MimeType, required: true,
+			value: 'application/octet-stream' },
+		accept: { type: db.MimeTypeGroup, multiple: true },
+		types: { type: db.MimeType, multiple: true },
+		typeMap: { type: db.Object, nested: true },
+		createByType: function (type) {
+			var args = Array.prototype.slice.call(arguments, 1)
+			  , Type = this.typeMap.get(type) || this;
+			return Type.apply(null, args);
+		}
+	});
 });
-
-File.types._itemPrototype_.set('Namespace', Db.Base);

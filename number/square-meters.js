@@ -1,11 +1,12 @@
 'use strict';
 
-var Db = require('dbjs');
+var memoize   = require('memoizee/lib/regular')
+  , validDbjs = require('dbjs/valid-dbjs');
 
-module.exports = Db.Number.create('SquareMeters', {
-	min: 0
-}, {
-	toString: function () {
-		return Number.prototype.toString.call(this) + 'm²';
-	}
+module.exports = memoize(function (db) {
+	return validDbjs(db).Number.extend('SquareMeters', { min: { value: 0 } }, {
+		toString: { value: function (/*options*/) {
+			return Number.prototype.toString.call(this) + 'm²';
+		} }
+	});
 });

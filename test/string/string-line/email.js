@@ -1,7 +1,12 @@
 'use strict';
 
+var Database = require('dbjs');
+
 module.exports = function (t, a) {
-	a.throws(function () { t('wrong email@marko'); }, "Wrong email");
-	a(t('test@example.com'), 'test@example.com', "Email #1");
-	a(t('foo+bar@example.com'), 'foo+bar@example.com', "Email #2");
+	var db = new Database(), Type = t(db);
+
+	a.throws(function () { Type('wrong email@marko'); }, 'INVALID_STRING',
+		"Wrong email");
+	a(Type('test@example.com'), 'test@example.com', "Email #1");
+	a(Type('foo+bar@example.com'), 'foo+bar@example.com', "Email #2");
 };

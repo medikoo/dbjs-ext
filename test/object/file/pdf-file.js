@@ -1,8 +1,11 @@
 'use strict';
 
+var Database = require('dbjs');
+
 module.exports = function (t, a) {
-	var pdf = t();
-	a.deep(pdf.type, 'application/pdf');
-	a(t.File.types.has(pdf.type), true, "Exposed");
-	a(t.File.types.getItem(pdf.type).Namespace, t, "Exposed Ns");
+	var db = new Database(), Type = t(db), pdf;
+
+	pdf = new Type();
+	a(pdf.type, 'application/pdf');
+	a(db.File.typeMap.get(pdf.type), Type, "Exposed");
 };

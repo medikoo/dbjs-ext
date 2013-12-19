@@ -1,10 +1,13 @@
 'use strict';
 
-var File = require('../../file')
+var memoize          = require('memoizee/lib/regular')
+  , defineMsWordFile = require('../ms-word-file');
 
-  , DocFile;
-
-DocFile = module.exports = require('../ms-word-file')
-	.create('MsWordDocFile', {}, { type: 'application/msword',
-		accept: ['application/msword'] });
-File.types.add(DocFile.type).Namespace = DocFile;
+module.exports = memoize(function (db) {
+	var Type = defineMsWordFile(db).extend('MsWordDocFile', {}, {
+		type: { value: 'application/msword' },
+		accept: { value: ['application/msword'] }
+	});
+	db.File.typeMap.set(Type.type, Type);
+	return Type;
+});

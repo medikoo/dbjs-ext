@@ -1,11 +1,16 @@
 'use strict';
 
-var isError = require('es5-ext/error/is-error');
+var Database = require('dbjs');
 
 module.exports = function (t, a) {
-	a(t('razdwa3'), 'razdwa3', "Valid");
-	a(isError(t.prototype.validateCreate('')), true, "Empty");
-	a(isError(t.prototype.validateCreate('razdwadasda')), true, "No digit");
-	a(isError(t.prototype.validateCreate('982389423')), true, "No a-z");
-	a(isError(t.prototype.validateCreate('raz1')), true, "Too short");
+	var db = new Database(), Type = t(db);
+
+	a(Type('razdwa3'), 'razdwa3', "Valid");
+	a.throws(function () { Type.validate(''); }, 'INVALID_STRING', "Empty");
+	a.throws(function () { Type.validate('razdwadasda'); }, 'INVALID_STRING',
+		"No digit");
+	a.throws(function () { Type.validate('982389423'); }, 'INVALID_STRING',
+		"No a-z");
+	a.throws(function () { Type.validate('raz1'); }, 'STRING_TOO_SHORT',
+		"Too short");
 };

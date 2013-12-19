@@ -1,9 +1,11 @@
 'use strict';
 
+var setPrototypeOf = require('es5-ext/object/set-prototype-of')
+  , Database       = require('dbjs');
+
 module.exports = function (t, a) {
-	var obj = Object(23);
+	var db = new Database(), Type = t(db), obj = Object(Type(23));
 
-	obj.__proto__ = t.prototype;
-
+	setPrototypeOf(obj, Type.prototype);
 	a(obj.toString(), 'CFA23.00');
 };

@@ -1,17 +1,20 @@
 'use strict';
 
-var isError = require('es5-ext/error/is-error');
+var Database = require('dbjs');
 
 module.exports = function (t, a) {
-	a(t('raz'), 'raz', "Constructor");
-	a(isError(t.prototype.validateCreate('')), true, "Empty");
-	a(t.prototype.validateCreate('.'), null, "Dot");
-	a(t.prototype.validateCreate('..'), null, "Double dot");
-	a(t.prototype.validateCreate('/'), null, "Slash");
-	a(t.prototype.validateCreate('c:\\'), null, "Windows root");
-	a(isError(t.prototype.validateCreate('c:/sdfsfd/')), true,
+	var db = new Database(), Type = t(db);
+
+	a(Type('raz'), 'raz', "Constructor");
+	a.throws(function () { Type.validate(''); }, 'STRING_TOO_SHORT', "Empty");
+	a(Type.validate('.'), '.', "Dot");
+	a(Type.validate('..'), '..', "Double dot");
+	a(Type.validate('/'), '/', "Slash");
+	a(Type.validate('c:\\'), 'c:\\', "Windows root");
+	a.throws(function () { Type.validate('c:/sdfsfd/'); }, 'INVALID_STRING',
 		"Wrong Windows root");
-	a(t.prototype.validateCreate('/asdf/asdf/as  df'), null, "Absolute");
-	a(t.prototype.validateCreate('asdf/asdf/asdf'), null, "Relative");
-	a(isError(t.prototype.validateCreate('/asdfasf\nsdf/sdf')), true, "New line");
+	a(Type.validate('/asdf/asdf/as  df'), '/asdf/asdf/as  df', "Absolute");
+	a(Type.validate('asdf/asdf/asdf'), 'asdf/asdf/asdf', "Relative");
+	a.throws(function () { Type.validate('/asdfasf\nsdf/sdf'); },
+		'INVALID_STRING', "New line");
 };

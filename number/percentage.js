@@ -1,10 +1,14 @@
 'use strict';
 
-module.exports = require('dbjs').Number.create('Percentage',
-	{ min: 0, max: 1, step: 0.01 }, {
-		toString: function () {
-			var num, step = this.ns.__step.__value, value = this * 100;
-			if (step != null) {
+var memoize   = require('memoizee/lib/regular')
+  , validDbjs = require('dbjs/valid-dbjs');
+
+module.exports = memoize(function (db) {
+	return validDbjs(db).Number.extend('Percentage',
+		{ min: { value: 0 }, max: { value: 1 }, step: { value: 0.01 } }, {
+			toString: { value: function (/*options*/) {
+				var num, step = this.constructor.step, value = this * 100;
+				if (!step) return value + '%';
 				num = 0;
 				step *= 100;
 				while (step < 1) {
@@ -12,7 +16,6 @@ module.exports = require('dbjs').Number.create('Percentage',
 					step *= 10;
 				}
 				return value.toFixed(num) + '%';
-			}
-			return value + '%';
-		}
-	});
+			} }
+		});
+});

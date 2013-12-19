@@ -1,11 +1,13 @@
 'use strict';
 
-var File = require('../file')
+var memoize    = require('memoizee/lib/regular')
+  , defineFile = require('../file');
 
-  , PdfFile;
-
-PdfFile = module.exports = File.create('PdfFile', {}, {
-	type: 'application/pdf',
-	accept: ['application/pdf']
+module.exports = memoize(function (db) {
+	var Type = defineFile(db).extend('PdfFile', {}, {
+		type: { value: 'application/pdf' },
+		accept: { value: ['application/pdf'] }
+	});
+	db.File.typeMap.set(Type.type, Type);
+	return Type;
 });
-File.types.add(PdfFile.type).Namespace = PdfFile;

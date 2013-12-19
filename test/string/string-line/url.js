@@ -1,17 +1,22 @@
 'use strict';
 
-var isError = require('es5-ext/error/is-error');
+var Database = require('dbjs');
 
 module.exports = function (t, a) {
-	a(t('raz'), 'raz', "Constructor");
-	a(isError(t.prototype.validateCreate('')), true, "Empty");
-	a(t.prototype.validateCreate('relative'), null, "Relative");
-	a(t.prototype.validateCreate('../'), null, "Double dot");
-	a(t.prototype.validateCreate('/'), null, "Slash");
-	a(t.prototype.validateCreate('https://www.medikoo.com'), null, "Https");
-	a(t.prototype.validateCreate('http://medikoo.com'), null, "Http");
-	a(isError(t.prototype.validateCreate('asfafa sdfdsf/fefe')), true, "Space");
-	a(t.prototype.validateCreate('/asdf/asdf/ass'), null, "Absolute");
-	a(t.prototype.validateCreate('asdf/asdf/asdf'), null, "Relative");
-	a(isError(t.prototype.validateCreate('/asdfasf\nsdf/sdf')), true, "New line");
+	var db = new Database(), Type = t(db);
+
+	a(Type('raz'), 'raz', "Constructor");
+	a.throws(function () { Type.validate(''); }, 'STRING_TOO_SHORT', "Empty");
+	a(Type.validate('relative'), 'relative', "Relative");
+	a(Type.validate('../'), '../', "Double dot");
+	a(Type.validate('/'), '/', "Slash");
+	a(Type.validate('https://www.medikoo.com'), 'https://www.medikoo.com',
+		"Https");
+	a(Type.validate('http://medikoo.com'), 'http://medikoo.com', "Http");
+	a.throws(function () { Type.validate('asfafa sdfdsf/fefe'); },
+		'INVALID_STRING', "Space");
+	a(Type.validate('/asdf/asdf/ass'), '/asdf/asdf/ass', "Absolute");
+	a(Type.validate('asdf/asdf/asdf'), 'asdf/asdf/asdf', "Relative");
+	a.throws(function () { Type.validate('/asdfasf\nsdf/sdf'); },
+		'INVALID_STRING', "New line");
 };

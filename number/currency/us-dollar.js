@@ -1,5 +1,9 @@
 'use strict';
 
-module.exports = require('../currency').create('UsDollar', {
-	symbol: '$'
+var memoize        = require('memoizee/lib/regular')
+  , defineCurrency = require('../currency');
+
+module.exports = memoize(function (db) {
+	defineCurrency(db);
+	return db.Currency.extend('UsDollar', { symbol: { value: '$' } });
 });

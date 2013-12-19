@@ -1,11 +1,8 @@
 {
   "name": "dbjs-ext",
   "version": "0.0.0",
-  "author": "Mariusz Nowak <mariusz@medikoo.com> (http://www.medikoo.com/)",
   "description": "Extension types for dbjs database engine",
-  "scripts": {
-    "test": "node node_modules/tad/bin/tad"
-  },
+  "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
   "keywords": [
     "db",
     "dbjs",
@@ -14,16 +11,23 @@
     "extensions",
     "nosql"
   ],
-  "dependencies": {
-    "dbjs": "git://github.com/medikoo/dbjs.git"
-  },
-  "devDependencies": {
-    "es5-ext": "git://github.com/medikoo/es5-ext.git",
-    "tad": "~0.1.13"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/medikoo/dbjs-ext.git"
+  },
+  "scripts": {
+    "test": "node node_modules/tad/bin/tad"
+  },
+  "dependencies": {
+    "es5-ext": "git://github.com/medikoo/es5-ext.git",
+    "es6-map": "git://github.com/medikoo/es6-map.git",
+    "d": "git://github.com/medikoo/d.git",
+    "dbjs": "git://github.com/medikoo/dbjs.git",
+    "memoizee": "git://github.com/medikoo/memoizee.git"
+  },
+  "devDependencies": {
+    "es6-iterator": "git://github.com/medikoo/es6-iterator.git",
+    "tad": "~0.1.20"
   },
   "license": "MIT"
 }

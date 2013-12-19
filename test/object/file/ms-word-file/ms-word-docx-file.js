@@ -1,9 +1,12 @@
 'use strict';
 
+var Database = require('dbjs');
+
 module.exports = function (t, a) {
-	var file = t();
+	var db = new Database(), Type = t(db), file;
+
+	file = new Type();
 	a.deep(file.type,
 		'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-	a(t.File.types.has(file.type), true, "Exposed");
-	a(t.File.types.getItem(file.type).Namespace, t, "Exposed Ns");
+	a(db.File.typeMap.get(file.type), Type, "Exposed");
 };

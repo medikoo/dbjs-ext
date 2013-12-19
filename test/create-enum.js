@@ -1,13 +1,15 @@
 'use strict';
 
-var isError = require('es5-ext/error/is-error');
+var Database = require('dbjs');
 
 module.exports = function (t, a) {
-	var week = t.create('Enumweektest',
+	var db = new Database(), week;
+	t(db);
+	week = db.String.createEnum('Enumweektest',
 		['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU']);
 
 	a(week('MO'), 'MO', "Valid");
-	a.throws(function () { week('FOO'); }, "Invalid");
+	a.throws(function () { week('FOO'); }, 'ENUM_MATCH', "Invalid");
 
 	return {
 		"Is": function (a) {
@@ -24,12 +26,11 @@ module.exports = function (t, a) {
 			a(week.normalize({}), null, "Invalid #2");
 		},
 		"Validate": function () {
-			a(week.prototype.validateCreate('MO'), null, "Valid");
-			a(isError(week.prototype.validateCreate('FOO')), true, "Invalid");
-			a(week.prototype.validateCreate({
-				toString: function () { return 'MO'; }
-			}), null, "Coercible");
-			a(isError(week.prototype.validateCreate({})), true, "Invalid #2");
+			a(week.validate('MO'), 'MO', "Valid");
+			a.throws(function () { week.validate('FOO'); }, 'ENUM_MATCH', "Invalid");
+			a(week.validate({ toString: function () { return 'MO'; } }), 'MO',
+				"Coercible");
+			a.throws(function () { week.validate({}); }, 'ENUM_MATCH', "Invalid #2");
 		}
 	};
 };

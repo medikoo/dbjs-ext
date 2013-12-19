@@ -1,6 +1,11 @@
 'use strict';
 
-module.exports = require('../string-line').create('Filename', {
-	pattern: /^(?:[a-zA-Z]:\\)?[\u0009 -9;-\uffff]*$/,
-	min: 1
+var memoize          = require('memoizee/lib/regular')
+  , defineStringLine = require('../string-line');
+
+module.exports = memoize(function (db) {
+	return defineStringLine(db).extend('Filename', {
+		pattern: { value: /^(?:[a-zA-Z]:\\)?[\u0009 -9;-\uffff]*$/ },
+		min: { value: 1 }
+	});
 });

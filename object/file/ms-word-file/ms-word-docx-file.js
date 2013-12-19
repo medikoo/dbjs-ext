@@ -1,15 +1,15 @@
 'use strict';
 
-var File = require('../../file')
+var memoize          = require('memoizee/lib/regular')
+  , defineMsWordFile = require('../ms-word-file');
 
-  , DocxFile;
-
-DocxFile = module.exports = require('../ms-word-file')
-	.create('MsWordDocxFile', {}, {
-		type:
-			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-		accept: [
-			'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-		]
+module.exports = memoize(function (db) {
+	var Type = defineMsWordFile(db).extend('MsWordDocFile', {}, {
+		type: { value: 'application/vnd.openxmlformats-officedocument.' +
+			'wordprocessingml.document' },
+		accept: { value: ['application/vnd.openxmlformats-officedocument.' +
+			'wordprocessingml.document'] }
 	});
-File.types.add(DocxFile.type).Namespace = DocxFile;
+	db.File.typeMap.set(Type.type, Type);
+	return Type;
+});

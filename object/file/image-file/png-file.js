@@ -1,11 +1,13 @@
 'use strict';
 
-var File = require('../../file')
+var memoize         = require('memoizee/lib/regular')
+  , defineImageFile = require('../image-file');
 
-  , PngFile;
-
-PngFile = module.exports = require('../image-file').create('PngFile', {}, {
-	type: 'image/png',
-	accept: ['image/png']
+module.exports = memoize(function (db) {
+	var Type = defineImageFile(db).extend('PngFile', {}, {
+		type: { value: 'image/png' },
+		accept: { value: ['image/png'] }
+	});
+	db.File.typeMap.set(Type.type, Type);
+	return Type;
 });
-File.types.add(PngFile.type).Namespace = PngFile;
