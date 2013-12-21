@@ -11,8 +11,9 @@ var forEach   = require('es5-ext/object/for-each')
   , defineProperty = Object.defineProperty;
 
 module.exports = memoize(function (db) {
-	defineProperty(validDb(db).Base, 'createEnum', d(function (name, members) {
-		var Type, meta;
+	validDb(db);
+	defineProperty(db.Base, 'createEnum', d(function (name, members, metaDef) {
+		var Type, meta, TypeMeta;
 		if (members && isMap(members)) {
 			meta = members;
 			members = members.keys();
@@ -35,8 +36,13 @@ module.exports = memoize(function (db) {
 				throw new DbjsError("Value not from specified set", 'ENUM_MATCH');
 			} }
 		});
+		TypeMeta = db.Object;
+		if (metaDef) {
+			if (metaDef.__id__) TypeMeta = metaDef;
+			else TypeMeta = db.Object.extend(name + 'Meta', metaDef);
+		}
 		Type.meta._descriptorPrototype_.setProperties({
-			type: db.Object,
+			type: TypeMeta,
 			nested: true
 		});
 		if (members != null) Type.members = members;
