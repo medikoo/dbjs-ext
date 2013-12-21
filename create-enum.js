@@ -13,12 +13,12 @@ var forEach   = require('es5-ext/object/for-each')
 module.exports = memoize(function (db) {
 	defineProperty(validDb(db).Base, 'createEnum', d(function (name, members) {
 		var Type, meta;
-		if (isMap(members)) {
+		if (members && isMap(members)) {
 			meta = members;
 			members = members.keys();
 		}
 		Type = this.extend(name, {
-			members: { type: this, multiple: true, value: members },
+			members: { type: this, multiple: true },
 			meta: { type: db.Object, nested: true },
 			is: { value: function (value) {
 				if (!Object.getPrototypeOf(this).is.call(this, value)) return false;
@@ -39,6 +39,7 @@ module.exports = memoize(function (db) {
 			type: db.Object,
 			nested: true
 		});
+		if (members != null) Type.members = members;
 		if (meta) {
 			meta.forEach(function (data, key) {
 				forEach(data, setProperty, this.get(key));
