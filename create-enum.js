@@ -3,12 +3,25 @@
 var forEach   = require('es5-ext/object/for-each')
   , isMap     = require('es6-map/is-map')
   , d         = require('d/d')
+  , lazy      = require('d/lazy')
   , memoize   = require('memoizee/lib/regular')
   , validDb   = require('dbjs/valid-dbjs')
   , DbjsError = require('dbjs/_setup/error')
 
   , setProperty = function (value, name) { this.set(name, value); }
-  , defineProperty = Object.defineProperty;
+  , defineProperties = Object.defineProperties
+  , defineProperty = Object.defineProperty
+
+  , getLabels;
+
+getLabels = function () {
+	var labels = {}, metaMap = this.meta;
+	this.members.forEach(function (name) {
+		var meta = metaMap.get(name);
+		if (meta.label) labels[name] = meta.label;
+	});
+	return labels;
+};
 
 module.exports = memoize(function (db) {
 	validDb(db);
@@ -51,6 +64,9 @@ module.exports = memoize(function (db) {
 				forEach(data, setProperty, this.get(key));
 			}, Type.meta);
 		}
+		defineProperties(Type, lazy({
+			labels: d(getLabels, { cacheName: '__labels__' })
+		}));
 		return Type;
 	}));
 	return db;
