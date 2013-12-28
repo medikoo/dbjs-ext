@@ -43,9 +43,11 @@ module.exports = memoize(function (db) {
 				return this.members.has(value) ? value : null;
 			} },
 			validate: { value: function (value) {
+				var Error;
 				value = Object.getPrototypeOf(this).validate.call(this, value);
 				if (this.members.has(value)) return value;
-				throw new this.database.Error("Value not from specified set",
+				Error = this.database.Error;
+				throw new Error("'" + value + "' is not from specified set",
 					'ENUM_MATCH');
 			} }
 		});
