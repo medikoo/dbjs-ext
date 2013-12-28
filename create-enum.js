@@ -1,28 +1,16 @@
 'use strict';
 
-var forEach   = require('es5-ext/object/for-each')
-  , isMap     = require('es6-map/is-map')
-  , d         = require('d/d')
-  , lazy      = require('d/lazy')
-  , memoize   = require('memoizee/lib/regular')
-  , validDb   = require('dbjs/valid-dbjs')
+var forEach         = require('es5-ext/object/for-each')
+  , isMap           = require('es6-map/is-map')
+  , d               = require('d/d')
+  , memoize         = require('memoizee/lib/regular')
+  , validDb         = require('dbjs/valid-dbjs')
+  , defineGetLabels = require('./enum-define-get-labels')
 
   , setProperty = function (value, name) { this.set(name, value); }
-  , defineProperties = Object.defineProperties
-  , defineProperty = Object.defineProperty
+  , defineProperty = Object.defineProperty;
 
-  , getLabels;
-
-getLabels = function () {
-	var labels = {}, metaMap = this.meta;
-	this.members.forEach(function (name) {
-		var meta = metaMap.get(name);
-		if (meta.label) labels[name] = meta.label;
-	});
-	return labels;
-};
-
-module.exports = memoize(function (db) {
+module.exports = exports = memoize(function (db) {
 	validDb(db);
 	defineProperty(db.Base, 'createEnum', d(function (name, members, metaDef) {
 		var Type, meta, TypeMeta;
@@ -66,10 +54,7 @@ module.exports = memoize(function (db) {
 				forEach(data, setProperty, this.get(key));
 			}, Type.meta);
 		}
-		defineProperties(Type, lazy({
-			labels: d(getLabels, { cacheName: '__labels__' })
-		}));
-		return Type;
+		return defineGetLabels(Type);
 	}));
 	return db;
 });
