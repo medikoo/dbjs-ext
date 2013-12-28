@@ -6,7 +6,6 @@ var forEach   = require('es5-ext/object/for-each')
   , lazy      = require('d/lazy')
   , memoize   = require('memoizee/lib/regular')
   , validDb   = require('dbjs/valid-dbjs')
-  , DbjsError = require('dbjs/_setup/error')
 
   , setProperty = function (value, name) { this.set(name, value); }
   , defineProperties = Object.defineProperties
@@ -46,7 +45,8 @@ module.exports = memoize(function (db) {
 			validate: { value: function (value) {
 				value = Object.getPrototypeOf(this).validate.call(this, value);
 				if (this.members.has(value)) return value;
-				throw new DbjsError("Value not from specified set", 'ENUM_MATCH');
+				throw new this.database.Error("Value not from specified set",
+					'ENUM_MATCH');
 			} }
 		});
 		TypeMeta = db.Object;
