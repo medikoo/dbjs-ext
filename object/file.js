@@ -18,7 +18,7 @@ module.exports = memoize(function (db) {
 		path: { type: db.Filename, required: true },
 		url: { type: db.Url },
 		name: { type: db.Filename },
-		size: { type: db.UInteger },
+		diskSize: { type: db.UInteger },
 		type: { type: db.MimeType, required: true,
 			value: function () { return this.constructor.type; } }
 	}, {
