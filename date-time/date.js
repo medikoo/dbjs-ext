@@ -9,7 +9,7 @@ module.exports = memoize(function (db) {
 	}, {
 		toString: { value: function (/*options*/) {
 			return (new Date(this.getUTCFullYear(), this.getUTCMonth(),
-				this.getUTCDate())).toLocalDateString(this.database.locale);
+				this.getUTCDate())).toLocaleDateString(this.database.locale);
 		} }
 	});
 });
