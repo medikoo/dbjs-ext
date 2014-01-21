@@ -1,14 +1,24 @@
 'use strict';
 
 var forEach         = require('es5-ext/object/for-each')
+  , isPlainObject   = require('es5-ext/object/is-plain-object')
   , isMap           = require('es6-map/is-map')
   , d               = require('d/d')
   , memoize         = require('memoizee/lib/regular')
   , validDb         = require('dbjs/valid-dbjs')
+  , validNested     = require('dbjs/valid-dbjs-nested-object')
   , defineGetLabels = require('./enum-define-get-labels')
 
-  , setProperty = function (value, name) { this.set(name, value); }
-  , defineProperty = Object.defineProperty;
+  , defineProperty = Object.defineProperty
+  , setProperty;
+
+setProperty = function (value, name) {
+	if (isPlainObject(value)) {
+		forEach(value, setProperty, validNested(this.get(name), this));
+		return;
+	}
+	this.set(name, value);
+};
 
 module.exports = exports = memoize(function (db) {
 	validDb(db);
