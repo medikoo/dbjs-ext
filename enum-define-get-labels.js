@@ -9,9 +9,10 @@ var d         = require('d/d')
   , getLabels;
 
 getLabels = function () {
-	var labels = {}, metaMap = this.meta;
+	var labels = {}, metaMap = this.meta
+	  , isConstant = typeof metaMap.get !== 'function';
 	this.members.forEach(function (name) {
-		var meta = metaMap.get(name);
+		var meta = isConstant ? metaMap[name] : metaMap.get(name);
 		if (meta.label) labels[name] = meta.label;
 	});
 	return labels;
