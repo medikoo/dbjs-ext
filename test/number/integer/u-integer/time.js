@@ -22,6 +22,13 @@ module.exports = function (t, a) {
 		"TOO LARGE");
 	a(Type(86399999), 86399999, "Maximum possible value");
 	a(Type(new Number(123)), 123, "Number object"); //jslint: skip
+
+	a(Type(23), 23, "One argument");
+	a(Type(13, 24), 13 * 1000 * 60 * 60 + 24 * 1000 * 60, "Two arguments");
+	a(Type(13, 24, 54), 13 * 1000 * 60 * 60 + 24 * 1000 * 60 + 54 * 1000,
+		"Three arguments");
+	a(Type(13, 24, 54, 645), 13 * 1000 * 60 * 60 + 24 * 1000 * 60 + 54 * 1000 +
+		645, "Four arguments");
 	return {
 		"Is": function (a) {
 			a(Type.is(undefined), false, "Undefined");
