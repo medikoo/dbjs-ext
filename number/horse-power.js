@@ -5,7 +5,7 @@ var memoize   = require('memoizee/lib/regular')
 
 module.exports = memoize(function (db) {
 	return validDbjs(db).Number.extend('HorsePower', { min: { value: 0 } }, {
-		toString: { value: function (/*options*/) {
+		toString: { value: function (descriptor) {
 			var num = 0, step = this.constructor.step;
 			if (step) {
 				while (step < 1) {

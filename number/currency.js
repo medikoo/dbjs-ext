@@ -8,7 +8,7 @@ module.exports = memoize(function (db) {
 		step: { value: 0.01 },
 		symbol: { type: db.String, required: true }
 	}, {
-		toString: { value: function (/*options*/) {
+		toString: { value: function (descriptor) {
 			var num = 0, step = this.constructor.step;
 			if (step) {
 				while (step < 1) {
