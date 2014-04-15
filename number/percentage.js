@@ -5,7 +5,7 @@ var memoize   = require('memoizee/lib/regular')
 
 module.exports = memoize(function (db) {
 	return validDbjs(db).Number.extend('Percentage',
-		{ min: { value: 0 }, max: { value: 1 }, step: { value: 0.01 } }, {
+		{ min: { value: 0 }, step: { value: 0.01 } }, {
 			toString: { value: function (descriptor) {
 				var num, step = this.constructor.step, value = this * 100;
 				if (!step) return value + '%';
