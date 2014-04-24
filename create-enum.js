@@ -3,7 +3,7 @@
 var forEach         = require('es5-ext/object/for-each')
   , isPlainObject   = require('es5-ext/object/is-plain-object')
   , isMap           = require('es6-map/is-map')
-  , d               = require('d/d')
+  , d               = require('d')
   , memoize         = require('memoizee/lib/regular')
   , validDb         = require('dbjs/valid-dbjs')
   , validNested     = require('dbjs/valid-dbjs-nested-object')
