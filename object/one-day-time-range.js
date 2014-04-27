@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize    = require('memoizee/lib/regular')
+var memoize    = require('memoizee/plain')
   , defineDate = require('../date-time/date')
   , defineTime = require('../number/integer/u-integer/time');
 
@@ -13,4 +13,4 @@ module.exports = memoize(function (db) {
 		from: { type: db.Time, required: true },
 		to: { type: db.Time, required: true }
 	});
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize         = require('memoizee/lib/regular')
+var memoize         = require('memoizee/plain')
   , defineImageFile = require('../image-file');
 
 module.exports = memoize(function (db) {
@@ -10,4 +10,4 @@ module.exports = memoize(function (db) {
 	});
 	db.File.typeMap.set(Type.type, Type);
 	return Type;
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

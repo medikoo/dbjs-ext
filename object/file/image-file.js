@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize        = require('memoizee/lib/regular')
+var memoize        = require('memoizee/plain')
   , defineUInteger = require('../../number/integer/u-integer')
   , defineFile     = require('../file');
 
@@ -12,4 +12,4 @@ module.exports = memoize(function (db) {
 	}, {
 		accept: { value: ['image/*'] }
 	});
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

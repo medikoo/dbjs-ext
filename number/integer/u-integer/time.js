@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize       = require('memoizee/lib/regular')
+var memoize       = require('memoizee/plain')
   , defineInteger = require('../u-integer');
 
 module.exports = memoize(function (db) {
@@ -22,4 +22,4 @@ module.exports = memoize(function (db) {
 			return [this.validate(value)];
 		} }
 	});
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

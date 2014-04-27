@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize         = require('memoizee/lib/regular')
+var memoize         = require('memoizee/plain')
   , defineFilename  = require('../string/string-line/filename')
   , defineMimeGroup = require('../string/string-line/mime-type-group')
   , defineMimeType  = require('../string/string-line/mime-type-group/mime-type')
@@ -35,4 +35,4 @@ module.exports = memoize(function (db) {
 			return Type.apply(null, args);
 		}
 	});
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize          = require('memoizee/lib/regular')
+var memoize          = require('memoizee/plain')
   , defineStringLine = require('../string-line');
 
 module.exports = memoize(function (db) {
@@ -88,4 +88,4 @@ module.exports = memoize(function (db) {
 			'\uE000-\uF8FF|\\/\\?])*)?(?:\\#(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~' +
 			'\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF!\\$&\'\\(\\)\\*\\+,;=:@])|[\\/' +
 			'\\?])*)?)$', 'i') }, min: { value: 1 } });
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

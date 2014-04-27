@@ -4,7 +4,7 @@ var forEach         = require('es5-ext/object/for-each')
   , isPlainObject   = require('es5-ext/object/is-plain-object')
   , isMap           = require('es6-map/is-map')
   , d               = require('d')
-  , memoize         = require('memoizee/lib/regular')
+  , memoize         = require('memoizee/plain')
   , validDb         = require('dbjs/valid-dbjs')
   , validNested     = require('dbjs/valid-dbjs-nested-object')
   , defineGetLabels = require('./enum-define-get-labels')
@@ -67,4 +67,4 @@ module.exports = exports = memoize(function (db) {
 		return defineGetLabels(Type);
 	}));
 	return db;
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

@@ -2,7 +2,7 @@
 
 var d         = require('d')
   , lazy      = require('d/lazy')
-  , memoize   = require('memoizee/lib/regular')
+  , memoize   = require('memoizee/plain')
 
   , defineProperties = Object.defineProperties
 
@@ -22,4 +22,4 @@ module.exports = exports = memoize(function (Type) {
 	return defineProperties(Type, lazy({
 		labels: d(getLabels, { cacheName: '__labels__' })
 	}));
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });

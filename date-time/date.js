@@ -1,6 +1,6 @@
 'use strict';
 
-var memoize   = require('memoizee/lib/regular')
+var memoize   = require('memoizee/plain')
   , validDbjs = require('dbjs/valid-dbjs');
 
 module.exports = memoize(function (db) {
@@ -12,4 +12,4 @@ module.exports = memoize(function (db) {
 				this.getUTCDate())).toLocaleDateString(this.database.locale);
 		} }
 	});
-});
+}, { normalizer: require('memoizee/normalizers/get-1')() });
