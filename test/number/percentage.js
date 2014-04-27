@@ -8,6 +8,4 @@ module.exports = function (t, a) {
 	setPrototypeOf(obj, Type.prototype);
 
 	a(obj.toString(), '77%');
-
-	a.throws(function () { Type(34); }, 'NUMBER_TOO_LARGE', "Out of range");
 };
