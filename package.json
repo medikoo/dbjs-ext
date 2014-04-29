@@ -15,9 +15,6 @@
     "type": "git",
     "url": "git://github.com/medikoo/dbjs-ext.git"
   },
-  "scripts": {
-    "test": "node node_modules/tad/bin/tad"
-  },
   "dependencies": {
     "es5-ext": "~0.10.2",
     "es6-map": "git://github.com/medikoo/es6-map.git",
@@ -28,6 +25,9 @@
   "devDependencies": {
     "es6-iterator": "git://github.com/medikoo/es6-iterator.git",
     "tad": "0.2.x"
+  },
+  "scripts": {
+    "test": "node node_modules/tad/bin/tad"
   },
   "license": "MIT"
 }
