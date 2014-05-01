@@ -18,7 +18,7 @@ module.exports = function (t, a) {
 	a(Type(123.63), 123, "Float #2");
 	a.throws(function () { Type(-123.34); }, 'NUMBER_TOO_SMALL',
 		"Float: Negative");
-	a(Type(new Number(123)), 123, "Number object"); //jslint: skip
+	a(Type(new Number(123)), 123, "Number object"); //jslint: ignore
 	return {
 		"Is": function (a) {
 			a(Type.is(undefined), false, "Undefined");
@@ -29,7 +29,7 @@ module.exports = function (t, a) {
 			a(Type.is('0'), false, "Conversible string");
 			a(Type.is(123), true, "Integer");
 			a(Type.is(-123), false, "Integer: Negative");
-			a(Type.is(new Number(123)), false, "Number object"); //jslint: skip
+			a(Type.is(new Number(123)), false, "Number object"); //jslint: ignore
 			a(Type.is(123.23), false, "Float");
 			a(Type.is(-123.23), false, "Float: Negative");
 		},
@@ -42,7 +42,7 @@ module.exports = function (t, a) {
 			a(Type.normalize('0'), 0, "Conversible string");
 			a(Type.normalize(123), 123, "Integer");
 			a(Type.normalize(-123), null, "Integer: Negative");
-			a(Type.normalize(new Number(123)), 123, "Number object"); //jslint: skip
+			a(Type.normalize(new Number(123)), 123, "Number object"); //jslint: ignore
 			a(Type.normalize(123.23), 123, "Float");
 			a(Type.normalize(123.53), 123, "Float #2");
 			a(Type.normalize(-123.23), null, "Float: Negative");
@@ -58,7 +58,7 @@ module.exports = function (t, a) {
 			a(Type.validate(123), 123, "Integer");
 			a.throws(function () { Type.validate(-123); }, 'NUMBER_TOO_SMALL',
 				"Integer: Negative");
-			a(Type.validate(new Number(123)), 123, //jslint: skip
+			a(Type.validate(new Number(123)), 123, //jslint: ignore
 				"Number object");
 			a(Type.validate(123.23), 123, "Float");
 			a.throws(function () { Type.validate(-123.34); }, 'NUMBER_TOO_SMALL',
