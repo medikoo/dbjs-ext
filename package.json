@@ -1,6 +1,6 @@
 {
   "name": "dbjs-ext",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Extension types for dbjs database engine",
   "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
   "keywords": [
@@ -16,14 +16,13 @@
     "url": "git://github.com/medikoo/dbjs-ext.git"
   },
   "dependencies": {
-    "es5-ext": "~0.10.2",
-    "es6-map": "git://github.com/medikoo/es6-map.git",
+    "es5-ext": "~0.10.4",
+    "es6-map": "0.1.x",
     "d": "~0.1.1",
-    "dbjs": "git://github.com/medikoo/dbjs.git",
-    "memoizee": "~0.3.1"
+    "dbjs": "0.0.1",
+    "memoizee": "~0.3.2"
   },
   "devDependencies": {
-    "es6-iterator": "git://github.com/medikoo/es6-iterator.git",
     "tad": "0.2.x"
   },
   "scripts": {
