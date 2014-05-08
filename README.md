@@ -1,18 +1,13 @@
-# DBJS-EXT
-## Common extensions (types) for [DBJS](https://github.com/medikoo/dbjs) database engine
+# dbjs-ext
+## Common type extensions for [dbjs](https://github.com/medikoo/dbjs) engine
 
-## Installation
-### NPM
+### Installation
 
-In your project path:
+	$ npm install dbjs-ext
 
-	$ npm install medikoo/dbjs-ext
+To port it to Browser or any other (non CJS) environment, use your favorite CJS bundler. No favorite yet? Try: [Browserify](http://browserify.org/), [Webmake](https://github.com/medikoo/modules-webmake) or [Webpack](http://webpack.github.io/)
 
-#### Browser
-
-You can easily bundle NPM packages for browser with [modules-webmake](https://github.com/medikoo/modules-webmake)
-
-## Available extensions (Type hierarchy)
+### Provided types
 
 _List of extensions is not closed and is still being completed._
 
@@ -21,13 +16,17 @@ _List of extensions is not closed and is still being completed._
 * Number
     * **Currency** - Abstract currency type, should be used only to create specific currency types
         * **ArgentinePeso** - Argentine Peso
+        * **CfaFranc** - CFA Franc
+        * **GuatemalanQuetzal** - Guatemalan Quetzal
         * **UsDollar** - US Dollar
     * **HorsePower** - [Horsepower unit](http://en.wikipedia.org/wiki/Horse_power)
     * **Integer** - Integer
-        * **UInteger** - Unsigned integer
+        * **UInteger** - Unsigned integer (technically just positive integer)
+           * **Time** - Time (milliseconds between 0:00:00.000 and 23:59:59.000)
     * **Percentage** - Percentage
     * **SquareMeters** - Square meters
 * Object
+    * **DateTimeRange** - Time Range
     * **File** - Computer file
         * **ImageFile** - Image file
             * **JpegFile** - JPG file
@@ -36,29 +35,30 @@ _List of extensions is not closed and is still being completed._
             * **MsWordDocFile** - MS Word .doc file
             * **MsWordDocxFile** - MS Word .docx file
         * **PdfFile** - PDF file
+    * **OneDayTimeRange** - Time Range within one day
 * String
-    * **StringLine** - String line (string which doesn't contain any new line characters)
+    * **StringLine** - String line (string with no new-line characters)
+        * **Country** - Country
         * **Email** - Email
-        * **Enum** - Enum, string restricted to one of the predefined set of strings
-            * **Country** - Country
-            * **Gender** - Gender (male/female)
         * **Filename** - Computer filename
-        * **MimeType** - Mime type
+        * **Gender** - Gender (male/female)
+        * **MimeTypeGroup** - Mime type group
+           * **MimeType** - Mime type
         * **Password** - Password
         * **Sha256Hash** - Sha256Hash
         * **Url** - Url
 
 ## Usage
 
-Simply import needed types and use it, e.g.:
-
 ```javascript
-require('dbjs-ext/string/string-line/email');
-require('dbjs-ext/string/string-line/password');
+var Database = require('dbjs');
+var db = new Database();
+require('dbjs-ext/string/string-line/email')(db)
+require('dbjs-ext/string/string-line/password')(db);
 
 Db.Object.create('User', {
-  email: Db.Email.rel({ required: true }),
-  password: Db.Password.rel({ required: true })
+  email: { type: db.Email, required: true },
+  password: { db.Password, required: true }
 });
 ```
 
