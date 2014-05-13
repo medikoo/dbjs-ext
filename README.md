@@ -19,6 +19,7 @@ _List of extensions is not closed and is still being completed._
         * **CfaFranc** - CFA Franc
         * **GuatemalanQuetzal** - Guatemalan Quetzal
         * **UsDollar** - US Dollar
+        * **TzsDollar** - Tanzania Dollar
     * **HorsePower** - [Horsepower unit](http://en.wikipedia.org/wiki/Horse_power)
     * **Integer** - Integer
         * **UInteger** - Unsigned integer (technically just positive integer)
