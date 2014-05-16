@@ -18,6 +18,10 @@ module.exports = function (t, a) {
 	a.throws(function () { DateType(new Date('Invalid')); }, "Invalid date");
 	a.throws(function () { DateType({}); }, "Other object");
 	a(isDate(DateType(23423423)), true, "Number");
+
+	date = DateType(2014, 3, 13);
+	a.deep([date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()], [2014, 3, 13],
+		"Full date arguments");
 	return {
 		"Is": function (a) {
 			var date = new Date();
