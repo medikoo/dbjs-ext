@@ -1,15 +1,10 @@
 'use strict';
 
-var isDate    = require('es5-ext/date/is-date')
-  , memoize   = require('memoizee/plain')
+var memoize   = require('memoizee/plain')
   , validDbjs = require('dbjs/valid-dbjs');
 
 module.exports = memoize(function (db) {
-	var DateTime = validDbjs(db).DateTime
-	  , validate = DateTime.validate, normalize = DateTime.normalize
-	  , DateType;
-
-	DateType = db.DateTime.extend('Date', {
+	return validDbjs(db).DateTime.extend('Date', {
 		step: { value: 1000 * 60 * 60 * 24 },
 		_validateCreate_: { value: function (value/*[, mth[, d[, h]]]*/) {
 			var l = arguments.length, year, month, day;
@@ -31,8 +26,11 @@ module.exports = memoize(function (db) {
 		} },
 		normalize: { value: function (value/*, descriptor*/) {
 			var year, month, date;
-			if (!isDate(value)) return normalize.apply(this, arguments);
-			if (value instanceof DateType) return normalize.apply(this, arguments);
+			if (!value) return this.database.DateTime.normalize.apply(this, arguments);
+			if (value instanceof this) return this.database.DateTime.normalize.apply(this, arguments);
+			if (Object.prototype.toString.call(value) !== '[object Date]') {
+				return this.database.DateTime.normalize.apply(this, arguments);
+			}
 			year = value.getFullYear();
 			month = value.getMonth();
 			date = value.getDate();
@@ -40,12 +38,15 @@ module.exports = memoize(function (db) {
 			value.setUTCFullYear(year);
 			value.setUTCMonth(month);
 			value.setUTCDate(date);
-			return normalize.call(this, value, arguments[1]);
+			return this.database.DateTime.normalize.call(this, value, arguments[1]);
 		} },
 		validate: { value: function (value/*, descriptor*/) {
 			var year, month, date;
-			if (!isDate(value)) return validate.apply(this, arguments);
-			if (value instanceof DateType) return validate.apply(this, arguments);
+			if (!value) return this.database.DateTime.validate.apply(this, arguments);
+			if (value instanceof this) return this.database.DateTime.validate.apply(this, arguments);
+			if (Object.prototype.toString.call(value) !== '[object Date]') {
+				return this.database.DateTime.validate.apply(this, arguments);
+			}
 			year = value.getFullYear();
 			month = value.getMonth();
 			date = value.getDate();
@@ -53,7 +54,7 @@ module.exports = memoize(function (db) {
 			value.setUTCFullYear(year);
 			value.setUTCMonth(month);
 			value.setUTCDate(date);
-			return validate.call(this, value, arguments[1]);
+			return this.database.DateTime.validate.call(this, value, arguments[1]);
 		} }
 	}, {
 		toString: { value: function (descriptor) {
@@ -61,5 +62,4 @@ module.exports = memoize(function (db) {
 				this.getUTCDate())).toLocaleDateString(this.database.locale);
 		} }
 	});
-	return DateType;
 }, { normalizer: require('memoizee/normalizers/get-1')() });
