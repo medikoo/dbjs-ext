@@ -6,7 +6,7 @@ var isDate         = require('es5-ext/date/is-date')
 
 module.exports = function (t, a) {
 	var date = new Date(), db = new Database()
-	  , DateType = t(db);
+	  , DateType = t(db), obj;
 
 	a(DateType.is(DateType()), true, "No arguments");
 	a(DateType.is(DateType(null)), true, "Null");
@@ -22,6 +22,11 @@ module.exports = function (t, a) {
 	date = DateType(2014, 3, 13);
 	a.deep([date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()], [2014, 3, 13],
 		"Full date arguments");
+
+	obj = db.Object();
+	obj.define('foo', { type: DateType });
+	obj.foo = new Date(2014, 5, 30);
+	a(obj.foo.getUTCDate(), 30, "Assign from normal date");
 	return {
 		"Is": function (a) {
 			var date = new Date();
@@ -55,7 +60,7 @@ module.exports = function (t, a) {
 			date.setUTCMinutes(0);
 			date.setUTCSeconds(0);
 			date.setUTCMilliseconds(0);
-			a(DateType.normalize(date), date, "Date: UTC");
+			a(DateType.is(DateType.normalize(date)), true, "Date: UTC");
 			a(DateType.normalize({}), null, "Other object");
 			a(DateType.normalize(date.getTime()).getTime(), date.getTime(), "Number");
 			a(DateType.normalize(new Date('Invalid')), null, "Invalid date");
