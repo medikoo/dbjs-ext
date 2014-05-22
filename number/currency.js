@@ -9,7 +9,9 @@ module.exports = memoize(function (db) {
 		symbol: { type: db.String, required: true }
 	}, {
 		toString: { value: function (descriptor) {
-			var num = 0, step = this.constructor.step;
+			var num = 0, step;
+			step = (descriptor && !isNaN(descriptor.step))
+				? Math.max(descriptor.step, this.constructor.step) : this.constructor.step;
 			if (step) {
 				while (step < 1) {
 					++num;
