@@ -22,7 +22,7 @@ module.exports = memoize(function (db) {
 				value = new Date(Date.UTC(value, arguments[1], (l > 2) ? arguments[2] : 1,
 					(l > 3) ? arguments[3] : 0));
 			}
-			return [this.validate(value)];
+			return [this.database.DateTime.validate.call(this, value)];
 		} },
 		normalize: { value: function (value/*, descriptor*/) {
 			var year, month, date;
