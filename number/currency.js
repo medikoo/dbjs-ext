@@ -6,7 +6,8 @@ var memoize   = require('memoizee/plain')
 module.exports = memoize(function (db) {
 	return validDbjs(db).Number.extend('Currency', {
 		step: { value: 0.01 },
-		symbol: { type: db.String, required: true }
+		symbol: { type: db.String, required: true },
+		isoCode: { type: db.String, required: true }
 	}, {
 		toString: { value: function (descriptor) {
 			var num = 0, step;
@@ -18,7 +19,7 @@ module.exports = memoize(function (db) {
 					step *= 10;
 				}
 			}
-			return this.constructor.symbol + this.toFixed(num);
+			return (this.constructor.symbol || this.constructor.isoCode) + this.toFixed(num);
 		} }
 	});
 }, { normalizer: require('memoizee/normalizers/get-1')() });

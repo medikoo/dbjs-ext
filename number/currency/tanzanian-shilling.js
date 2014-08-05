@@ -5,5 +5,5 @@ var memoize        = require('memoizee/plain')
 
 module.exports = memoize(function (db) {
 	defineCurrency(db);
-	return db.Currency.extend('TanzanianShilling', { symbol: { value: 'TZS' } });
+	return db.Currency.extend('TanzanianShilling', { isoCode: { value: 'TZS' } });
 }, { normalizer: require('memoizee/normalizers/get-1')() });
