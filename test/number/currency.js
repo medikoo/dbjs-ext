@@ -10,4 +10,12 @@ module.exports = function (t, a) {
 
 	setPrototypeOf(obj, Type.prototype);
 	a(obj.toString(), 'TEST23.00');
+
+	a.h1("Format");
+	a(Currency.format(0.78912), '0.79', "Less than 1");
+	a(Currency.format(56.78912), '56.79', "Tens");
+	a(Currency.format(456.78912), '456.79', "Hundreds");
+	a(Currency.format(3456.78912), '3\'456.79', "Thousands");
+	a(Currency.format(123456.78912), '123\'456.79', "Hundreds of thousands");
+	a(Currency.format(7123456.78912), '7\'123\'456.79', "Millions");
 };
