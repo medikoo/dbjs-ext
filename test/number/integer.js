@@ -18,7 +18,7 @@ module.exports = function (t, a) {
 	a(Type(-123.64), -123, "Float: Negative #2");
 	a(Type(new Number(123)), 123, "Number object"); //jslint: ignore
 	return {
-		"Is": function (a) {
+		Is: function (a) {
 			a(Type.is(undefined), false, "Undefined");
 			a(Type.is(null), false, "Null");
 			a(Type.is(false), false, "Boolean");
@@ -30,7 +30,7 @@ module.exports = function (t, a) {
 			a(Type.is(123.23), false, "Float");
 			a(Type.is(-123.23), false, "Float: Negative");
 		},
-		"Normalize": function (a) {
+		Normalize: function (a) {
 			a(Type.normalize(undefined), null, "Undefined");
 			a(Type.normalize(null), 0, "Null");
 			a(Type.normalize(false), 0, "Boolean");
@@ -44,7 +44,7 @@ module.exports = function (t, a) {
 			a(Type.normalize(-123.23), -123, "Float: Negative");
 			a(Type.normalize(-123.64), -123, "Float: Negative #2");
 		},
-		"Validate": function (a) {
+		Validate: function (a) {
 			a.throws(function () { Type.validate(); }, 'INVALID_NUMBER', "Undefined");
 			a(Type.validate(null), 0, "Null");
 			a(Type.validate(false), 0, "Boolean");

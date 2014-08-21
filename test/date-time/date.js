@@ -28,7 +28,7 @@ module.exports = function (t, a) {
 	obj.foo = new Date(2014, 5, 30);
 	a(obj.foo.getUTCDate(), 30, "Assign from normal date");
 	return {
-		"Is": function (a) {
+		Is: function (a) {
 			var date = new Date();
 			a(DateType.is(), false, "Undefined");
 			a(DateType.is(null), false, "Null");
@@ -50,7 +50,7 @@ module.exports = function (t, a) {
 			a(DateType.is(date.getTime()), false, "Number");
 			a(DateType.is(new Date('Invalid')), false, "Invalid date");
 		},
-		"Normalize": function (a) {
+		Normalize: function (a) {
 			var date = new Date();
 			a(DateType.normalize(), null, "Undefined");
 			a(DateType.is(DateType.normalize(null)), true, "Null");
@@ -65,7 +65,7 @@ module.exports = function (t, a) {
 			a(DateType.normalize(date.getTime()).getTime(), date.getTime(), "Number");
 			a(DateType.normalize(new Date('Invalid')), null, "Invalid date");
 		},
-		"Validate": function (a) {
+		Validate: function (a) {
 			var date = new Date();
 			a.throws(function () { DateType.validate(); }, 'INVALID_DATETIME',
 				"Undefined");
