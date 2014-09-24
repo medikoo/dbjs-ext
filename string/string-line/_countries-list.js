@@ -1,3 +1,5 @@
+// Source: https://en.wikipedia.org/wiki/List_of_sovereign_states
+
 'use strict';
 
 module.exports = [
