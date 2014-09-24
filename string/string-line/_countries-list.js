@@ -141,7 +141,6 @@ module.exports = [
 	['PA', { label: 'Panama' }],
 	['PG', { label: 'Papua New Guinea' }],
 	['PY', { label: 'Paraguay' }],
-	['YD', { label: 'People\'s Democratic Republic of Yemen' }],
 	['PE', { label: 'Peru' }],
 	['PH', { label: 'Philippines' }],
 	['PL', { label: 'Poland' }],
