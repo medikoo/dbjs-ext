@@ -13,7 +13,7 @@ module.exports = memoize(function (db) {
 			if (isNaN(value)) return 'Invalid value';
 			value = Number(value);
 			if (!isFinite(value)) return String(value);
-			value = value.toFixed(options.step || 2).split('.');
+			value = value.toFixed(options.fractionDigits || 2).split('.');
 			intPart = value[0];
 			result = value[1];
 			if (result) result = (options.decSep || '.') + result;
@@ -38,7 +38,7 @@ module.exports = memoize(function (db) {
 			}
 			if (this.constructor.symbol) prefix = this.constructor.symbol;
 			else prefix = this.constructor.isoCode + ' ';
-			return this.constructor.format(this, { step: num, prefix: prefix });
+			return this.constructor.format(this, { fractionDigits: num, prefix: prefix });
 		} }
 	});
 }, { normalizer: require('memoizee/normalizers/get-1')() });
