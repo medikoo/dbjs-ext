@@ -13,7 +13,7 @@ module.exports = memoize(function (db) {
 			if (isNaN(value)) return 'Invalid value';
 			value = Number(value);
 			if (!isFinite(value)) return String(value);
-			value = value.toFixed(options.fractionDigits || 2).split('.');
+			value = value.toFixed(isNaN(options.fractionDigits) ? 2 : options.fractionDigits).split('.');
 			intPart = value[0];
 			result = value[1];
 			if (result) result = (options.decSep || '.') + result;
