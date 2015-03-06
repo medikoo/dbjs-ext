@@ -2,7 +2,8 @@
 
 var isDate         = require('es5-ext/date/is-date')
   , setPrototypeOf = require('es5-ext/object/set-prototype-of')
-  , Database       = require('dbjs');
+  , Database       = require('dbjs')
+  , Event          = require('dbjs/_setup/event');
 
 module.exports = function (t, a) {
 	var date = new Date(), db = new Database()
@@ -76,6 +77,16 @@ module.exports = function (t, a) {
 			a.throws(function () { DateType.validate({}); }, 'INVALID_DATETIME',
 				"Other object");
 			a(isDate(DateType.validate(234234)), true, "Number");
+		},
+		toString: function (a) {
+			db.Object.prototype.define('dates', {
+				multiple: true,
+				type: db.Date
+			});
+			var obj = db.objects.unserialize('Object#/dates*41420070400000');
+			new Event(obj, true, 123); //jslint: ignore
+			a(obj.key instanceof db.DateTime, true);
+			a(db.Object.prototype.dates.first instanceof db.Date, true);
 		}
 	};
 };
