@@ -9,7 +9,8 @@ module.exports = memoize(function (db) {
 		min: { value: 1 },
 		adapt: { value: function (name) {
 			var prefix = '';
-			if (name.slice(0, 2).test(/[a-zA-Z]:/)) {
+			name = String(name);
+			if (/[a-zA-Z]:/.test(name.slice(0, 2))) {
 				prefix = name.slice(0, 2);
 				name = name.slice(2);
 			}
