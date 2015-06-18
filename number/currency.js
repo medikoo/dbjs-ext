@@ -37,7 +37,8 @@ module.exports = memoize(function (db) {
 				}
 			}
 			if (this.constructor.symbol) prefix = this.constructor.symbol;
-			else prefix = this.constructor.isoCode + ' ';
+			else if (this.constructor.isoCode) prefix = this.constructor.isoCode + ' ';
+			else prefix = '';
 			return this.constructor.format(this, { fractionDigits: num, prefix: prefix });
 		} }
 	});
