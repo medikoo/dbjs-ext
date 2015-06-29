@@ -45,8 +45,7 @@ module.exports = exports = memoize(function (db) {
 				value = Object.getPrototypeOf(this).validate.call(this, value);
 				if (this.members.has(value)) return value;
 				Error = this.database.Error;
-				throw new Error("'" + value + "' is not from specified set",
-					'ENUM_MATCH');
+				throw new Error("'" + value + "' is not from specified set", 'ENUM_MATCH');
 			} }
 		});
 		TypeMeta = db.Object;
