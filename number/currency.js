@@ -1,6 +1,7 @@
 'use strict';
 
-var memoize   = require('memoizee/plain')
+var isNumber  = require('es5-ext/object/is-number-value')
+  , memoize   = require('memoizee/plain')
   , validDbjs = require('dbjs/valid-dbjs');
 
 module.exports = memoize(function (db) {
@@ -28,7 +29,7 @@ module.exports = memoize(function (db) {
 	}, {
 		toString: { value: function (descriptor) {
 			var num = 0, step, prefix;
-			step = (descriptor && !isNaN(descriptor.step)) ? descriptor.step : this.constructor.step;
+			step = (descriptor && isNumber(descriptor.step)) ? descriptor.step : this.constructor.step;
 			if (step) {
 				while (step < 1) {
 					++num;
