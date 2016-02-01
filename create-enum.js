@@ -49,7 +49,13 @@ module.exports = exports = memoize(function (db) {
 			} }
 		}, {
 			toString: { value: function (value) {
-				return this.constructor.meta[value].label;
+				var metaValue = this.constructor.meta[value];
+
+				if (metaValue && metaValue.label) {
+					return metaValue.label;
+				}
+
+				return value;
 			} }
 		});
 		TypeMeta = db.Object;
