@@ -48,14 +48,19 @@ module.exports = exports = memoize(function (db) {
 				throw new Error("'" + value + "' is not from specified set", 'ENUM_MATCH');
 			} }
 		}, {
-			toString: { value: function (value) {
-				var metaValue = this.constructor.meta[value];
+			toString: { value: function (ignore) {
+				try {
+					var value     = String.prototype.toString.call(this)
+					  , metaValue = this.constructor.meta[value];
 
-				if (metaValue && (metaValue.label != null)) {
-					return metaValue.label;
+					if (metaValue && (metaValue.label != null)) {
+						return metaValue.label;
+					}
+
+					return value;
+				} catch (e) {
+					return Object.prototype.toString.call(this);
 				}
-
-				return value;
 			} }
 		});
 		TypeMeta = db.Object;
