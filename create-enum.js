@@ -51,7 +51,7 @@ module.exports = exports = memoize(function (db) {
 			toString: { value: function (value) {
 				var metaValue = this.constructor.meta[value];
 
-				if (metaValue && metaValue.label) {
+				if (metaValue && (metaValue.label != null)) {
 					return metaValue.label;
 				}
 
