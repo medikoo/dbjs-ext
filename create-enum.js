@@ -47,6 +47,21 @@ module.exports = exports = memoize(function (db) {
 				Error = this.database.Error;
 				throw new Error("'" + value + "' is not from specified set", 'ENUM_MATCH');
 			} }
+		}, {
+			toString: { value: function (ignore) {
+				try {
+					var value     = String.prototype.toString.call(this)
+					  , metaValue = this.constructor.meta[value];
+
+					if (metaValue && (metaValue.label != null)) {
+						return metaValue.label;
+					}
+
+					return value;
+				} catch (e) {
+					return Object.prototype.toString.call(this);
+				}
+			} }
 		});
 		TypeMeta = db.Object;
 		if (metaDef) {
