@@ -40,6 +40,9 @@ module.exports = memoize(function (db) {
 			value.setUTCDate(date);
 			return this.database.DateTime.normalize.call(this, value, arguments[1]);
 		} },
+		_normalizeUnserialized_: { value: function (value/*, descriptor*/) {
+			return this.database.DateTime.normalize.apply(this, arguments);
+		} },
 		validate: { value: function (value/*, descriptor*/) {
 			var year, month, date;
 			if (!value) return this.database.DateTime.validate.apply(this, arguments);
