@@ -2,10 +2,7 @@
 
 var memoize       = require('memoizee/plain')
   , validDbjs     = require('dbjs/valid-dbjs')
-  , isNumber      = require('es5-ext/object/is-number-value')
-  , isString      = require('es5-ext/string/is-string')
-  , camelToHyphen = require('es5-ext/string/#/camel-to-hyphen')
-  , max           = Math.max;
+  , camelToHyphen = require('es5-ext/string/#/camel-to-hyphen');
 
 module.exports = memoize(function (db) {
 	return validDbjs(db).Number.extend('Currency', {
@@ -74,13 +71,13 @@ module.exports = memoize(function (db) {
 	}, {
 		toString: { value: function (descriptor) {
 			var num = 0
-			  , step = (descriptor && isNumber(descriptor.step)) ?
-					max(descriptor.step, this.constructor.step) : this.constructor.step
-			  , currencyDisplay = (descriptor && isString(descriptor.currencyDisplay)) ?
+			  , step = (descriptor && (descriptor.step != null) && !isNaN(descriptor.step)) ?
+					Math.max(descriptor.step, this.constructor.step) : this.constructor.step
+			  , currencyDisplay = (descriptor && (descriptor.currencyDisplay != null)) ?
 					descriptor.currencyDisplay : this.constructor.currencyDisplay
-			  , isoCode = (descriptor && isString(descriptor.isoCode)) ?
+			  , isoCode = (descriptor && (descriptor.isoCode != null)) ?
 					descriptor.isoCode : this.constructor.isoCode
-			  , symbol = (descriptor && isString(descriptor.symbol)) ?
+			  , symbol = (descriptor && (descriptor.symbol != null)) ?
 					descriptor.symbol : this.constructor.symbol;
 
 			if (step) {
