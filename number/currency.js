@@ -3,7 +3,6 @@
 var memoize       = require('memoizee/plain')
   , validDbjs     = require('dbjs/valid-dbjs')
   , isNumber      = require('es5-ext/object/is-number-value')
-  , assign        = require('es5-ext/object/assign')
   , isString      = require('es5-ext/string/is-string')
   , camelToHyphen = require('es5-ext/string/#/camel-to-hyphen')
   , max           = Math.max;
@@ -21,9 +20,11 @@ module.exports = memoize(function (db) {
 		// Currency symbol such as € or $
 		symbol: { type: db.String, required: true },
 		format: { type: db.Function, value: function (value/*, options*/) {
-			var options = assign({ style: 'currency' }, Object(arguments[1]))
+			var options = Object(arguments[1])
 			  , locale  = options.locale
 			  , intPart, fraction, decSep, numSep, prefix;
+
+			options.style = 'currency';
 
 			// Handle non-numbers forst
 			if (isNaN(value)) return 'Invalid value';
