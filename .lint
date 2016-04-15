@@ -11,4 +11,4 @@ newcap
 nomen
 plusplus
 
-jslint.predef+ console, setTimeout
+jslint.predef+ console, setTimeout, Intl
