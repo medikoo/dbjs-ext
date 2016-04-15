@@ -20,8 +20,12 @@ module.exports = memoize(function (db) {
 		// Currency symbol such as € or $
 		symbol: { type: db.String, required: true },
 		format: { type: db.Function, value: function (value/*, options*/) {
-			var options = Object(arguments[1])
-			  , locale  = options.locale
+			var options               = Object(arguments[1])
+			  , locale                = options.locale
+			  , currency              = options.currency
+			  , currencyDisplay       = options.currencyDisplay
+			  , minimumFractionDigits = options.minimumFractionDigits
+			  , maximumFractionDigits = options.maximumFractionDigits
 			  , intPart, fraction, decSep, numSep, prefix;
 
 			options.style = 'currency';
@@ -33,28 +37,29 @@ module.exports = memoize(function (db) {
 
 			// Use Intl if available and we have what we need
 			if ((typeof Intl !== 'undefined') && (typeof Intl.NumberFormat === 'function')
-					&& locale && options.currency) {
-				// Sanitize options to prevent breaking something if Intl API changes
-				delete options.locale;
-				delete options.symbol;
-				delete options.decSep;
-				delete options.numSep;
-				return value.toLocaleString(locale, options);
+					&& locale && currency) {
+				return value.toLocaleString(locale, {
+					style: 'currency',
+					minimumFractionDigits: minimumFractionDigits,
+					maximumFractionDigits: maximumFractionDigits,
+					currencyDisplay: currencyDisplay,
+					currency: currency
+				});
 			}
 
 			// Try our best without Intl
-			value = value.toFixed(isNaN(options.minimumFractionDigits) ? 2
-				: options.minimumFractionDigits).split('.');
+			value = value.toFixed(isNaN(minimumFractionDigits) ? 2
+				: minimumFractionDigits).split('.');
 			intPart = value[0];
 			fraction = value[1] || '';
 			decSep = options.decSep || '.';
 			numSep = options.numSep || '\'';
 
-			if (options.currencyDisplay === 'name') {
+			if (currencyDisplay === 'name') {
 				prefix = camelToHyphen.call(this.__id__);
 			} else {
-				if (options.currencyDisplay === 'symbol') prefix = options.symbol;
-				if (options.currencyDisplay === 'code' || !prefix) prefix = options.currency;
+				if (currencyDisplay === 'symbol') prefix = options.symbol;
+				if (currencyDisplay === 'code' || !prefix) prefix = currency;
 				if (!prefix) prefix = '';
 			}
 
