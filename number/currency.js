@@ -87,8 +87,8 @@ module.exports = memoize(function (db) {
 
 			return this.constructor.format(this, {
 				locale: this.database.locale,
-				minimumFractionDigits: num,
-				maximumFractionDigits: num,
+				minimumFractionDigits: num || null,
+				maximumFractionDigits: num || null,
 				currencyDisplay: currencyDisplay,
 				currency: isoCode,
 				symbol: symbol
