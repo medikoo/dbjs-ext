@@ -21,7 +21,7 @@ module.exports = memoize(function (db) {
 		// Currency symbol such as € or $
 		symbol: { type: db.String, required: true },
 		format: { type: db.Function, value: function (value/*, options*/) {
-			var options = assign({ style: 'currency' }, arguments[1])
+			var options = assign({ style: 'currency' }, Object(arguments[1]))
 			  , locale  = options.locale
 			  , intPart, fraction, decSep, numSep, prefix;
 
