@@ -16,14 +16,14 @@
     "url": "git://github.com/medikoo/dbjs-ext.git"
   },
   "dependencies": {
-    "es5-ext": "^0.10.11",
-    "es6-map": "^0.1.4",
     "d": "1",
-    "dbjs": "git://github.com/medikoo/dbjs.git",
-    "memoizee": "^0.3.10"
+    "dbjs": "^0.1.1",
+    "es5-ext": "^0.10.18",
+    "es6-map": "^0.1.5",
+    "memoizee": "^0.4.5"
   },
   "devDependencies": {
-    "tad": "^0.2.4",
+    "tad": "^0.2.7",
     "xlint": "^0.2.2",
     "xlint-jslint-medikoo": "^0.1.4"
   },
