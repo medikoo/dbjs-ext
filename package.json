@@ -1,6 +1,6 @@
 {
   "name": "dbjs-ext",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Extension types for dbjs database engine",
   "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
   "keywords": [

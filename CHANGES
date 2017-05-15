@@ -1,2 +1,19 @@
-v0.0.1
+v0.1.0  --  2017.05.15
+* Introduce types:
+  * TanzanianShilling
+* Updates to Date type:
+  * Fix handling of constructor arguments
+  * Ensure to rely on custom serializer
+* Updates for currency types:
+  * Introduce isoCode property
+  * Fix support of `step` setting on descriptor when `toString` is concerned
+  * If possible resolve string representation through native Intl API
+* Introduce `adapt` function for Filename type
+* Add toString for enum types (defaults to meta label)
+* Fix email regexp to allow unicode characters
+* Fix list of countries
+* Configure lint scripts
+* Fix spelling of LICENSE
+
+v0.0.1  --  2014.05.08
 Initial (not stable API)
